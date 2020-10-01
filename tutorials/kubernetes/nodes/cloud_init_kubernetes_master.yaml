@@ -20,12 +20,12 @@ write_files:
     #!/bin/bash
     set -ex
     echo "Setup preparation starts."
-
+    
     useradd -s /bin/bash -d /home/kubeuser/ -m -G sudo kubeuser
     echo "kubeuser:kubeuser" | chpasswd
     usermod -aG sudo kubeuser
     echo "kubeuser ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers
-
+  
     mkdir -p /home/kubeuser/.ssh
     chmod 700 /home/kubeuser/.ssh
     chown kubeuser:kubeuser /home/kubeuser/.ssh
@@ -33,11 +33,11 @@ write_files:
     mv /tmp/kubeuser/id_rsa /home/kubeuser/.ssh
     chmod 600 /home/kubeuser/.ssh/id_rsa
     chown kubeuser:kubeuser /home/kubeuser/.ssh/id_rsa
-
+ 
     mv /tmp/kubeuser/authorized_keys /home/kubeuser/.ssh
     chmod 600 /home/kubeuser/.ssh/authorized_keys
     chown kubeuser:kubeuser /home/kubeuser/.ssh/authorized_keys
-
+    
     swapoff -a
     echo '* libraries/restart-without-asking boolean true' | debconf-set-selections
     apt-get update
@@ -111,6 +111,7 @@ write_files:
     apt install {{variables.pythonversion}} -y
     {{variables.pythonversion}} --version
     echo "Setup Python finished"
+
   permissions: '755'
 ###############################
 # SCRIPT TO CONFIG
